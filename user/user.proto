@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "user/";
+
+package lucianagRpcPKG;
+
+// 用于注册时校验用户是否存在
+message RegisterEmail {
+  string email = 1;
+}
+
+message Existence {
+  bool exist = 1;
+  bool serverErr = 2;
+}
+
+service CheckExistence {
+  rpc RegisterCheck(RegisterEmail) returns (Existence) {}
+}
+
+// 发送注册信息
+message RegisterForm {
+  string email = 1;
+  string password = 2;
+  string userName = 3;
+  int64 userID = 4;
+}
+
+message Success {
+  bool success = 1;
+  bool serverErr = 2;
+}
+
+service RegisterInfo {
+  rpc Register(RegisterForm) returns (Success) {}
+}
+
+// 发送登录信息
+message LoginForm {
+  string email = 1;
+  string password = 2;
+}
+
+message LogInfo {
+  int64 userID = 1;
+  bool serverErr = 2;
+}
+
+service LoginCheck {
+  rpc LoginCheck(LoginForm) returns (LogInfo) {}
+}
