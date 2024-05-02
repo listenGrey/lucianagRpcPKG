@@ -43,7 +43,9 @@ message LoginForm {
 
 message LogInfo {
   int64 userID = 1;
-  bool serverErr = 2;
+  bool exist = 2;
+  bool success = 3;
+  bool serverErr = 4;
 }
 
 service LoginCheck {
