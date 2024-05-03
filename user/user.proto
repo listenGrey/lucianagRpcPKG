@@ -11,7 +11,7 @@ message RegisterEmail {
 
 message Existence {
   bool exist = 1;
-  bool serverErr = 2;
+  bool server_error = 2;
 }
 
 service CheckExistence {
@@ -22,13 +22,13 @@ service CheckExistence {
 message RegisterForm {
   string email = 1;
   string password = 2;
-  string userName = 3;
-  int64 userID = 4;
+  string user_name = 3;
+  int64 user_id = 4;
 }
 
 message Success {
   bool success = 1;
-  bool serverErr = 2;
+  bool server_error = 2;
 }
 
 service RegisterInfo {
@@ -42,10 +42,11 @@ message LoginForm {
 }
 
 message LogInfo {
-  int64 userID = 1;
-  bool exist = 2;
-  bool success = 3;
-  bool serverErr = 4;
+  int64 user_id = 1;
+  string user_name = 2;
+  bool exist = 3;
+  bool success = 4;
+  bool server_error = 5;
 }
 
 service LoginCheck {
