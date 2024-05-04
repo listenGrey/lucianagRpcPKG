@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option go_package = "chat/";
+
+package lucianagRpcPKG;
+
+message ID {
+  int64 id = 1;
+}
+
+message QA {
+  string request = 1;
+  string response = 2;
+}
+
+message Chat {
+  int64 id = 1;
+  string name = 2;
+  repeated QA qas = 3;
+}
+
+message Chats {
+  repeated Chat chats = 1;
+}
+
+// 发送对话
+service GetChatService {
+  rpc GetChat(ID) returns (Chat) {}
+}
+
+// 发送对话列表
+service GetChatsService {
+  rpc GetChats(ID) returns (Chats) {}
+}
