@@ -5,34 +5,16 @@ option go_package = "user/";
 package lucianagRpcPKG;
 
 // 用于注册时校验用户是否存在
-message RegisterEmail {
+message Email {
   string email = 1;
 }
 
-message Existence {
+message Exist {
   bool exist = 1;
-  bool server_error = 2;
 }
 
-service CheckExistence {
-  rpc RegisterCheck(RegisterEmail) returns (Existence) {}
-}
-
-// 发送注册信息
-message RegisterForm {
-  string email = 1;
-  string password = 2;
-  string user_name = 3;
-  int64 user_id = 4;
-}
-
-message Success {
-  bool success = 1;
-  bool server_error = 2;
-}
-
-service RegisterInfo {
-  rpc Register(RegisterForm) returns (Success) {}
+service CheckExist {
+  rpc RegisterCheck(Email) returns (Exist) {}
 }
 
 // 发送登录信息
@@ -46,7 +28,6 @@ message LogInfo {
   string user_name = 2;
   bool exist = 3;
   bool success = 4;
-  bool server_error = 5;
 }
 
 service LoginCheck {

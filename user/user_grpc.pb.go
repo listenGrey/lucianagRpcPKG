@@ -18,172 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// CheckExistenceClient is the client API for CheckExistence service.
+// CheckExistClient is the client API for CheckExist service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CheckExistenceClient interface {
-	RegisterCheck(ctx context.Context, in *RegisterEmail, opts ...grpc.CallOption) (*Existence, error)
+type CheckExistClient interface {
+	RegisterCheck(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error)
 }
 
-type checkExistenceClient struct {
+type checkExistClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCheckExistenceClient(cc grpc.ClientConnInterface) CheckExistenceClient {
-	return &checkExistenceClient{cc}
+func NewCheckExistClient(cc grpc.ClientConnInterface) CheckExistClient {
+	return &checkExistClient{cc}
 }
 
-func (c *checkExistenceClient) RegisterCheck(ctx context.Context, in *RegisterEmail, opts ...grpc.CallOption) (*Existence, error) {
-	out := new(Existence)
-	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.CheckExistence/RegisterCheck", in, out, opts...)
+func (c *checkExistClient) RegisterCheck(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error) {
+	out := new(Exist)
+	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.CheckExist/RegisterCheck", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CheckExistenceServer is the server API for CheckExistence service.
-// All implementations must embed UnimplementedCheckExistenceServer
+// CheckExistServer is the server API for CheckExist service.
+// All implementations must embed UnimplementedCheckExistServer
 // for forward compatibility
-type CheckExistenceServer interface {
-	RegisterCheck(context.Context, *RegisterEmail) (*Existence, error)
-	mustEmbedUnimplementedCheckExistenceServer()
+type CheckExistServer interface {
+	RegisterCheck(context.Context, *Email) (*Exist, error)
+	mustEmbedUnimplementedCheckExistServer()
 }
 
-// UnimplementedCheckExistenceServer must be embedded to have forward compatible implementations.
-type UnimplementedCheckExistenceServer struct {
+// UnimplementedCheckExistServer must be embedded to have forward compatible implementations.
+type UnimplementedCheckExistServer struct {
 }
 
-func (UnimplementedCheckExistenceServer) RegisterCheck(context.Context, *RegisterEmail) (*Existence, error) {
+func (UnimplementedCheckExistServer) RegisterCheck(context.Context, *Email) (*Exist, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterCheck not implemented")
 }
-func (UnimplementedCheckExistenceServer) mustEmbedUnimplementedCheckExistenceServer() {}
+func (UnimplementedCheckExistServer) mustEmbedUnimplementedCheckExistServer() {}
 
-// UnsafeCheckExistenceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CheckExistenceServer will
+// UnsafeCheckExistServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CheckExistServer will
 // result in compilation errors.
-type UnsafeCheckExistenceServer interface {
-	mustEmbedUnimplementedCheckExistenceServer()
+type UnsafeCheckExistServer interface {
+	mustEmbedUnimplementedCheckExistServer()
 }
 
-func RegisterCheckExistenceServer(s grpc.ServiceRegistrar, srv CheckExistenceServer) {
-	s.RegisterService(&CheckExistence_ServiceDesc, srv)
+func RegisterCheckExistServer(s grpc.ServiceRegistrar, srv CheckExistServer) {
+	s.RegisterService(&CheckExist_ServiceDesc, srv)
 }
 
-func _CheckExistence_RegisterCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterEmail)
+func _CheckExist_RegisterCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Email)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CheckExistenceServer).RegisterCheck(ctx, in)
+		return srv.(CheckExistServer).RegisterCheck(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/lucianagRpcPKG.CheckExistence/RegisterCheck",
+		FullMethod: "/lucianagRpcPKG.CheckExist/RegisterCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CheckExistenceServer).RegisterCheck(ctx, req.(*RegisterEmail))
+		return srv.(CheckExistServer).RegisterCheck(ctx, req.(*Email))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CheckExistence_ServiceDesc is the grpc.ServiceDesc for CheckExistence service.
+// CheckExist_ServiceDesc is the grpc.ServiceDesc for CheckExist service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CheckExistence_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "lucianagRpcPKG.CheckExistence",
-	HandlerType: (*CheckExistenceServer)(nil),
+var CheckExist_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "lucianagRpcPKG.CheckExist",
+	HandlerType: (*CheckExistServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "RegisterCheck",
-			Handler:    _CheckExistence_RegisterCheck_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "user/user.proto",
-}
-
-// RegisterInfoClient is the client API for RegisterInfo service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RegisterInfoClient interface {
-	Register(ctx context.Context, in *RegisterForm, opts ...grpc.CallOption) (*Success, error)
-}
-
-type registerInfoClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewRegisterInfoClient(cc grpc.ClientConnInterface) RegisterInfoClient {
-	return &registerInfoClient{cc}
-}
-
-func (c *registerInfoClient) Register(ctx context.Context, in *RegisterForm, opts ...grpc.CallOption) (*Success, error) {
-	out := new(Success)
-	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.RegisterInfo/Register", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// RegisterInfoServer is the server API for RegisterInfo service.
-// All implementations must embed UnimplementedRegisterInfoServer
-// for forward compatibility
-type RegisterInfoServer interface {
-	Register(context.Context, *RegisterForm) (*Success, error)
-	mustEmbedUnimplementedRegisterInfoServer()
-}
-
-// UnimplementedRegisterInfoServer must be embedded to have forward compatible implementations.
-type UnimplementedRegisterInfoServer struct {
-}
-
-func (UnimplementedRegisterInfoServer) Register(context.Context, *RegisterForm) (*Success, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
-}
-func (UnimplementedRegisterInfoServer) mustEmbedUnimplementedRegisterInfoServer() {}
-
-// UnsafeRegisterInfoServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RegisterInfoServer will
-// result in compilation errors.
-type UnsafeRegisterInfoServer interface {
-	mustEmbedUnimplementedRegisterInfoServer()
-}
-
-func RegisterRegisterInfoServer(s grpc.ServiceRegistrar, srv RegisterInfoServer) {
-	s.RegisterService(&RegisterInfo_ServiceDesc, srv)
-}
-
-func _RegisterInfo_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterForm)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RegisterInfoServer).Register(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/lucianagRpcPKG.RegisterInfo/Register",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegisterInfoServer).Register(ctx, req.(*RegisterForm))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// RegisterInfo_ServiceDesc is the grpc.ServiceDesc for RegisterInfo service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var RegisterInfo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "lucianagRpcPKG.RegisterInfo",
-	HandlerType: (*RegisterInfoServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Register",
-			Handler:    _RegisterInfo_Register_Handler,
+			Handler:    _CheckExist_RegisterCheck_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
