@@ -4,16 +4,14 @@ option go_package = "ask/";
 
 package lucianagRpcPKG;
 
-message ChatContext {
-  string Topic = 1;
-  repeated string Prerequisites = 2;
-  string Request = 3;
+message Request {
+  string Prompt = 1;
 }
 
-message Result {
-  string Response = 1;
+message Response {
+  string Result = 1;
 }
 
-service ResponseService {
-  rpc Response(ChatContext) returns (Result) {}
+service ChatService {
+  rpc Chat(Request) returns (Response) {}
 }
