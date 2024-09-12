@@ -17,6 +17,22 @@ service CheckExist {
   rpc RegisterCheck(Email) returns (Exist) {}
 }
 
+// 发送注册信息
+message RegisterFrom {
+  int64 id = 1;
+  string email = 2;
+  string name = 3;
+  string password = 4;
+}
+
+message Success {
+  bool success = 1;
+}
+
+service RegisterCheck {
+  rpc RegisterCheck(RegisterFrom) returns (Success) {}
+}
+
 // 发送登录信息
 message LoginForm {
   string email = 1;

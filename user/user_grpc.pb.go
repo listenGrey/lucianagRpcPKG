@@ -104,6 +104,92 @@ var CheckExist_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "user/user.proto",
 }
 
+// RegisterCheckClient is the client API for RegisterCheck service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RegisterCheckClient interface {
+	RegisterCheck(ctx context.Context, in *RegisterFrom, opts ...grpc.CallOption) (*Success, error)
+}
+
+type registerCheckClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRegisterCheckClient(cc grpc.ClientConnInterface) RegisterCheckClient {
+	return &registerCheckClient{cc}
+}
+
+func (c *registerCheckClient) RegisterCheck(ctx context.Context, in *RegisterFrom, opts ...grpc.CallOption) (*Success, error) {
+	out := new(Success)
+	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.RegisterCheck/RegisterCheck", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RegisterCheckServer is the server API for RegisterCheck service.
+// All implementations must embed UnimplementedRegisterCheckServer
+// for forward compatibility
+type RegisterCheckServer interface {
+	RegisterCheck(context.Context, *RegisterFrom) (*Success, error)
+	mustEmbedUnimplementedRegisterCheckServer()
+}
+
+// UnimplementedRegisterCheckServer must be embedded to have forward compatible implementations.
+type UnimplementedRegisterCheckServer struct {
+}
+
+func (UnimplementedRegisterCheckServer) RegisterCheck(context.Context, *RegisterFrom) (*Success, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterCheck not implemented")
+}
+func (UnimplementedRegisterCheckServer) mustEmbedUnimplementedRegisterCheckServer() {}
+
+// UnsafeRegisterCheckServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RegisterCheckServer will
+// result in compilation errors.
+type UnsafeRegisterCheckServer interface {
+	mustEmbedUnimplementedRegisterCheckServer()
+}
+
+func RegisterRegisterCheckServer(s grpc.ServiceRegistrar, srv RegisterCheckServer) {
+	s.RegisterService(&RegisterCheck_ServiceDesc, srv)
+}
+
+func _RegisterCheck_RegisterCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterFrom)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegisterCheckServer).RegisterCheck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/lucianagRpcPKG.RegisterCheck/RegisterCheck",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegisterCheckServer).RegisterCheck(ctx, req.(*RegisterFrom))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RegisterCheck_ServiceDesc is the grpc.ServiceDesc for RegisterCheck service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RegisterCheck_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "lucianagRpcPKG.RegisterCheck",
+	HandlerType: (*RegisterCheckServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "RegisterCheck",
+			Handler:    _RegisterCheck_RegisterCheck_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user/user.proto",
+}
+
 // LoginCheckClient is the client API for LoginCheck service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
