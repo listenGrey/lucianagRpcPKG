@@ -4,14 +4,15 @@ option go_package = "ask/";
 
 package lucianagRpcPKG;
 
-message Request {
-  string Prompt = 1;
+message Prompt {
+  int64  id = 1;
+  string prompt = 2;
 }
 
 message Response {
-  string Result = 1;
+  string response = 1;
 }
 
-service ChatService {
-  rpc Chat(Request) returns (Response) {}
+service Request {
+  rpc Request(Prompt) returns (Response) {}
 }

@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CheckExistClient interface {
-	RegisterCheck(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error)
+	CheckExist(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error)
 }
 
 type checkExistClient struct {
@@ -33,9 +33,9 @@ func NewCheckExistClient(cc grpc.ClientConnInterface) CheckExistClient {
 	return &checkExistClient{cc}
 }
 
-func (c *checkExistClient) RegisterCheck(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error) {
+func (c *checkExistClient) CheckExist(ctx context.Context, in *Email, opts ...grpc.CallOption) (*Exist, error) {
 	out := new(Exist)
-	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.CheckExist/RegisterCheck", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.CheckExist/CheckExist", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *checkExistClient) RegisterCheck(ctx context.Context, in *Email, opts ..
 // All implementations must embed UnimplementedCheckExistServer
 // for forward compatibility
 type CheckExistServer interface {
-	RegisterCheck(context.Context, *Email) (*Exist, error)
+	CheckExist(context.Context, *Email) (*Exist, error)
 	mustEmbedUnimplementedCheckExistServer()
 }
 
@@ -54,8 +54,8 @@ type CheckExistServer interface {
 type UnimplementedCheckExistServer struct {
 }
 
-func (UnimplementedCheckExistServer) RegisterCheck(context.Context, *Email) (*Exist, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterCheck not implemented")
+func (UnimplementedCheckExistServer) CheckExist(context.Context, *Email) (*Exist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckExist not implemented")
 }
 func (UnimplementedCheckExistServer) mustEmbedUnimplementedCheckExistServer() {}
 
@@ -70,20 +70,20 @@ func RegisterCheckExistServer(s grpc.ServiceRegistrar, srv CheckExistServer) {
 	s.RegisterService(&CheckExist_ServiceDesc, srv)
 }
 
-func _CheckExist_RegisterCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CheckExist_CheckExist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Email)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CheckExistServer).RegisterCheck(ctx, in)
+		return srv.(CheckExistServer).CheckExist(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/lucianagRpcPKG.CheckExist/RegisterCheck",
+		FullMethod: "/lucianagRpcPKG.CheckExist/CheckExist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CheckExistServer).RegisterCheck(ctx, req.(*Email))
+		return srv.(CheckExistServer).CheckExist(ctx, req.(*Email))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var CheckExist_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CheckExistServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RegisterCheck",
-			Handler:    _CheckExist_RegisterCheck_Handler,
+			MethodName: "CheckExist",
+			Handler:    _CheckExist_CheckExist_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

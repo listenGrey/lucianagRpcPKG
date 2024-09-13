@@ -14,7 +14,7 @@ message Exist {
 }
 
 service CheckExist {
-  rpc RegisterCheck(Email) returns (Exist) {}
+  rpc CheckExist(Email) returns (Exist) {}
 }
 
 // 发送注册信息

@@ -19,16 +19,35 @@ message Chat {
   repeated QA qas = 3;
 }
 
-message Chats {
-  repeated Chat chats = 1;
+message ChatList {
+  repeated Chat chatList = 1;
 }
 
-// 发送对话
-service GetChatService {
+message Success {
+  bool success = 1;
+}
+
+// 获取对话列表 chat_list
+service GetChatList {
+  rpc GetChatList(ID) returns (ChatList) {}
+}
+
+// 获取对话 get_chat
+service GetChat {
   rpc GetChat(ID) returns (Chat) {}
 }
 
-// 发送对话列表
-service GetChatsService {
-  rpc GetChats(ID) returns (Chats) {}
+// 发送新建对话 new_chat
+service NewChat {
+  rpc NewChat(Chat) returns (Success) {}
+}
+
+// 对话重命名 rename_chat
+service RenameChat {
+  rpc RenameChat(Chat) returns (Success) {}
+}
+
+// 删除对话 delete_chat
+service DeleteChat {
+  rpc DeleteChat(ID) returns (Success) {}
 }

@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ChatServiceClient is the client API for ChatService service.
+// RequestClient is the client API for Request service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ChatServiceClient interface {
-	Chat(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+type RequestClient interface {
+	Request(ctx context.Context, in *Prompt, opts ...grpc.CallOption) (*Response, error)
 }
 
-type chatServiceClient struct {
+type requestClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
-	return &chatServiceClient{cc}
+func NewRequestClient(cc grpc.ClientConnInterface) RequestClient {
+	return &requestClient{cc}
 }
 
-func (c *chatServiceClient) Chat(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *requestClient) Request(ctx context.Context, in *Prompt, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.ChatService/Chat", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.Request/Request", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ChatServiceServer is the server API for ChatService service.
-// All implementations must embed UnimplementedChatServiceServer
+// RequestServer is the server API for Request service.
+// All implementations must embed UnimplementedRequestServer
 // for forward compatibility
-type ChatServiceServer interface {
-	Chat(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedChatServiceServer()
+type RequestServer interface {
+	Request(context.Context, *Prompt) (*Response, error)
+	mustEmbedUnimplementedRequestServer()
 }
 
-// UnimplementedChatServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedChatServiceServer struct {
+// UnimplementedRequestServer must be embedded to have forward compatible implementations.
+type UnimplementedRequestServer struct {
 }
 
-func (UnimplementedChatServiceServer) Chat(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Chat not implemented")
+func (UnimplementedRequestServer) Request(context.Context, *Prompt) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Request not implemented")
 }
-func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
+func (UnimplementedRequestServer) mustEmbedUnimplementedRequestServer() {}
 
-// UnsafeChatServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ChatServiceServer will
+// UnsafeRequestServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RequestServer will
 // result in compilation errors.
-type UnsafeChatServiceServer interface {
-	mustEmbedUnimplementedChatServiceServer()
+type UnsafeRequestServer interface {
+	mustEmbedUnimplementedRequestServer()
 }
 
-func RegisterChatServiceServer(s grpc.ServiceRegistrar, srv ChatServiceServer) {
-	s.RegisterService(&ChatService_ServiceDesc, srv)
+func RegisterRequestServer(s grpc.ServiceRegistrar, srv RequestServer) {
+	s.RegisterService(&Request_ServiceDesc, srv)
 }
 
-func _ChatService_Chat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+func _Request_Request_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Prompt)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).Chat(ctx, in)
+		return srv.(RequestServer).Request(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/lucianagRpcPKG.ChatService/Chat",
+		FullMethod: "/lucianagRpcPKG.Request/Request",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).Chat(ctx, req.(*Request))
+		return srv.(RequestServer).Request(ctx, req.(*Prompt))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
+// Request_ServiceDesc is the grpc.ServiceDesc for Request service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "lucianagRpcPKG.ChatService",
-	HandlerType: (*ChatServiceServer)(nil),
+var Request_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "lucianagRpcPKG.Request",
+	HandlerType: (*RequestServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Chat",
-			Handler:    _ChatService_Chat_Handler,
+			MethodName: "Request",
+			Handler:    _Request_Request_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
