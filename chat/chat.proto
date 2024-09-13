@@ -29,9 +29,7 @@ message UserChat {
   string name = 3;
 }
 
-message Success {
-  bool success = 1;
-}
+message Null {}
 
 // 获取对话列表 chat_list
 service GetChatList {
@@ -45,15 +43,15 @@ service GetChat {
 
 // 发送新建对话 new_chat
 service NewChat {
-  rpc NewChat(UserChat) returns (Success) {}
+  rpc NewChat(UserChat) returns (Null) {}
 }
 
 // 对话重命名 rename_chat
 service RenameChat {
-  rpc RenameChat(Chat) returns (Success) {}
+  rpc RenameChat(Chat) returns (Null) {}
 }
 
 // 删除对话 delete_chat
 service DeleteChat {
-  rpc DeleteChat(ID) returns (Success) {}
+  rpc DeleteChat(ID) returns (Null) {}
 }
