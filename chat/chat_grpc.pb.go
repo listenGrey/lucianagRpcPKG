@@ -194,7 +194,7 @@ var GetChat_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewChatClient interface {
-	NewChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Success, error)
+	NewChat(ctx context.Context, in *UserChat, opts ...grpc.CallOption) (*Success, error)
 }
 
 type newChatClient struct {
@@ -205,7 +205,7 @@ func NewNewChatClient(cc grpc.ClientConnInterface) NewChatClient {
 	return &newChatClient{cc}
 }
 
-func (c *newChatClient) NewChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Success, error) {
+func (c *newChatClient) NewChat(ctx context.Context, in *UserChat, opts ...grpc.CallOption) (*Success, error) {
 	out := new(Success)
 	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.NewChat/NewChat", in, out, opts...)
 	if err != nil {
@@ -218,7 +218,7 @@ func (c *newChatClient) NewChat(ctx context.Context, in *Chat, opts ...grpc.Call
 // All implementations must embed UnimplementedNewChatServer
 // for forward compatibility
 type NewChatServer interface {
-	NewChat(context.Context, *Chat) (*Success, error)
+	NewChat(context.Context, *UserChat) (*Success, error)
 	mustEmbedUnimplementedNewChatServer()
 }
 
@@ -226,7 +226,7 @@ type NewChatServer interface {
 type UnimplementedNewChatServer struct {
 }
 
-func (UnimplementedNewChatServer) NewChat(context.Context, *Chat) (*Success, error) {
+func (UnimplementedNewChatServer) NewChat(context.Context, *UserChat) (*Success, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NewChat not implemented")
 }
 func (UnimplementedNewChatServer) mustEmbedUnimplementedNewChatServer() {}
@@ -243,7 +243,7 @@ func RegisterNewChatServer(s grpc.ServiceRegistrar, srv NewChatServer) {
 }
 
 func _NewChat_NewChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Chat)
+	in := new(UserChat)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func _NewChat_NewChat_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/lucianagRpcPKG.NewChat/NewChat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewChatServer).NewChat(ctx, req.(*Chat))
+		return srv.(NewChatServer).NewChat(ctx, req.(*UserChat))
 	}
 	return interceptor(ctx, in, info, handler)
 }

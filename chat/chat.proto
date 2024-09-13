@@ -23,6 +23,12 @@ message ChatList {
   repeated Chat chatList = 1;
 }
 
+message UserChat {
+  int64 uid = 1;
+  int64 cid = 2;
+  string name = 3;
+}
+
 message Success {
   bool success = 1;
 }
@@ -39,7 +45,7 @@ service GetChat {
 
 // 发送新建对话 new_chat
 service NewChat {
-  rpc NewChat(Chat) returns (Success) {}
+  rpc NewChat(UserChat) returns (Success) {}
 }
 
 // 对话重命名 rename_chat
