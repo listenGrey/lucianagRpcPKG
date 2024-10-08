@@ -194,7 +194,7 @@ var GetChat_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewChatClient interface {
-	NewChat(ctx context.Context, in *UserChat, opts ...grpc.CallOption) (*Null, error)
+	NewChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Null, error)
 }
 
 type newChatClient struct {
@@ -205,7 +205,7 @@ func NewNewChatClient(cc grpc.ClientConnInterface) NewChatClient {
 	return &newChatClient{cc}
 }
 
-func (c *newChatClient) NewChat(ctx context.Context, in *UserChat, opts ...grpc.CallOption) (*Null, error) {
+func (c *newChatClient) NewChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Null, error) {
 	out := new(Null)
 	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.NewChat/NewChat", in, out, opts...)
 	if err != nil {
@@ -218,7 +218,7 @@ func (c *newChatClient) NewChat(ctx context.Context, in *UserChat, opts ...grpc.
 // All implementations must embed UnimplementedNewChatServer
 // for forward compatibility
 type NewChatServer interface {
-	NewChat(context.Context, *UserChat) (*Null, error)
+	NewChat(context.Context, *Chat) (*Null, error)
 	mustEmbedUnimplementedNewChatServer()
 }
 
@@ -226,7 +226,7 @@ type NewChatServer interface {
 type UnimplementedNewChatServer struct {
 }
 
-func (UnimplementedNewChatServer) NewChat(context.Context, *UserChat) (*Null, error) {
+func (UnimplementedNewChatServer) NewChat(context.Context, *Chat) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NewChat not implemented")
 }
 func (UnimplementedNewChatServer) mustEmbedUnimplementedNewChatServer() {}
@@ -243,7 +243,7 @@ func RegisterNewChatServer(s grpc.ServiceRegistrar, srv NewChatServer) {
 }
 
 func _NewChat_NewChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserChat)
+	in := new(Chat)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func _NewChat_NewChat_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/lucianagRpcPKG.NewChat/NewChat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewChatServer).NewChat(ctx, req.(*UserChat))
+		return srv.(NewChatServer).NewChat(ctx, req.(*Chat))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -280,7 +280,7 @@ var NewChat_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RenameChatClient interface {
-	RenameChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Null, error)
+	RenameChat(ctx context.Context, in *ChatInfo, opts ...grpc.CallOption) (*Null, error)
 }
 
 type renameChatClient struct {
@@ -291,7 +291,7 @@ func NewRenameChatClient(cc grpc.ClientConnInterface) RenameChatClient {
 	return &renameChatClient{cc}
 }
 
-func (c *renameChatClient) RenameChat(ctx context.Context, in *Chat, opts ...grpc.CallOption) (*Null, error) {
+func (c *renameChatClient) RenameChat(ctx context.Context, in *ChatInfo, opts ...grpc.CallOption) (*Null, error) {
 	out := new(Null)
 	err := c.cc.Invoke(ctx, "/lucianagRpcPKG.RenameChat/RenameChat", in, out, opts...)
 	if err != nil {
@@ -304,7 +304,7 @@ func (c *renameChatClient) RenameChat(ctx context.Context, in *Chat, opts ...grp
 // All implementations must embed UnimplementedRenameChatServer
 // for forward compatibility
 type RenameChatServer interface {
-	RenameChat(context.Context, *Chat) (*Null, error)
+	RenameChat(context.Context, *ChatInfo) (*Null, error)
 	mustEmbedUnimplementedRenameChatServer()
 }
 
@@ -312,7 +312,7 @@ type RenameChatServer interface {
 type UnimplementedRenameChatServer struct {
 }
 
-func (UnimplementedRenameChatServer) RenameChat(context.Context, *Chat) (*Null, error) {
+func (UnimplementedRenameChatServer) RenameChat(context.Context, *ChatInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RenameChat not implemented")
 }
 func (UnimplementedRenameChatServer) mustEmbedUnimplementedRenameChatServer() {}
@@ -329,7 +329,7 @@ func RegisterRenameChatServer(s grpc.ServiceRegistrar, srv RenameChatServer) {
 }
 
 func _RenameChat_RenameChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Chat)
+	in := new(ChatInfo)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -341,7 +341,7 @@ func _RenameChat_RenameChat_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/lucianagRpcPKG.RenameChat/RenameChat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RenameChatServer).RenameChat(ctx, req.(*Chat))
+		return srv.(RenameChatServer).RenameChat(ctx, req.(*ChatInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }

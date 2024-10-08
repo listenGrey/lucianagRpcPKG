@@ -5,7 +5,7 @@ option go_package = "ask/";
 package lucianagRpcPKG;
 
 message Prompt {
-  int64  id = 1;
+  int64  cid = 1;
   string prompt = 2;
 }
 

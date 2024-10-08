@@ -8,28 +8,29 @@ message ID {
   int64 id = 1;
 }
 
+message Null {}
+
+message ChatList {
+  int64 uid = 1;
+  repeated ChatInfo chats = 2;
+}
+
+message ChatInfo {
+  int64 cid = 1;
+  string name = 2;
+}
+
+message Chat {
+  int64 cid = 1;
+  int64 uid = 2;
+  string name = 3;
+  repeated QA qas = 4;
+}
+
 message QA {
   string request = 1;
   string response = 2;
 }
-
-message Chat {
-  int64 id = 1;
-  string name = 2;
-  repeated QA qas = 3;
-}
-
-message ChatList {
-  repeated Chat chatList = 1;
-}
-
-message UserChat {
-  int64 uid = 1;
-  int64 cid = 2;
-  string name = 3;
-}
-
-message Null {}
 
 // 获取对话列表 chat_list
 service GetChatList {
@@ -43,12 +44,12 @@ service GetChat {
 
 // 发送新建对话 new_chat
 service NewChat {
-  rpc NewChat(UserChat) returns (Null) {}
+  rpc NewChat(Chat) returns (Null) {}
 }
 
 // 对话重命名 rename_chat
 service RenameChat {
-  rpc RenameChat(Chat) returns (Null) {}
+  rpc RenameChat(ChatInfo) returns (Null) {}
 }
 
 // 删除对话 delete_chat
