@@ -49,10 +49,10 @@ service NewChat {
 
 // 对话重命名 rename_chat
 service RenameChat {
-  rpc RenameChat(ChatInfo) returns (Null) {}
+  rpc RenameChat(Chat) returns (Null) {}
 }
 
 // 删除对话 delete_chat
 service DeleteChat {
-  rpc DeleteChat(ID) returns (Null) {}
+  rpc DeleteChat(Chat) returns (Null) {}
 }
